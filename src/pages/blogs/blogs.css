@@ -1,22 +1,8 @@
-.articles-container {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 250px;
+@media (max-width: 575.98px) {
+    .article-content {
+        display: none;
+    }
+    .article h4 {
+        font-size: 14px;
+    }
 }
-
-.articles-container .articles-left {
-    height: 200px;
-}
-
-.articles-container .articles-left img {
-    object-fit: cover;
-}
-
-.articles-container .articles-right {
-    height: 200px;
-    overflow: hidden;
-}
-

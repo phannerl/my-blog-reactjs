@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ArticleState, IArticle } from '../../type.d';
+import { removeDiacritics } from '../../utils';
 
 const initialState: ArticleState = {
     articles: [],
+    articlesSearch: [],
 };
 
 export const ArticleSlice = createSlice({
@@ -11,7 +13,7 @@ export const ArticleSlice = createSlice({
     reducers: {
         addArticle: (state, action) => {
             const newArticle: IArticle = {
-                id: Math.random(),
+                id: Math.random().toString(),
                 title: action.payload.title,
                 content: action.payload.content,
                 image: action.payload.img,
@@ -21,8 +23,11 @@ export const ArticleSlice = createSlice({
             state.articles.push(newArticle);
         },
         addArticles: (state, action) => {
-            state.articles = [...state.articles, ...action.payload];
-            console.log('state.articles:', state.articles);
+            for (const article of action.payload) {
+                if (!state.articles.find((a) => a.id === article.id)) {
+                    state.articles.push(article);
+                }
+            }
         },
         removeArticle: (state, action) => {
             state.articles = state.articles.filter(
@@ -31,10 +36,41 @@ export const ArticleSlice = createSlice({
         },
         removeAllArticles: (state) => {
             state.articles = [];
-        }
+        },
+        searchArticles: (state, action) => {
+            if (action.payload === '') {
+                state.articlesSearch = state.articles;
+                return;
+            }
+            const searchResult = state.articles.filter((article) =>
+                removeDiacritics(article.title.toLowerCase()).includes(
+                    removeDiacritics(action.payload).toLowerCase(),
+                ),
+            );
+            state.articlesSearch = searchResult;
+        },
+        sortedArticlesByDate: (state, action) => {
+            const sortedArticles = [...state.articles].sort((a, b) => {
+                if (a.createdAt > b.createdAt) {
+                    return action.payload ? -1 : 1;
+                }
+                if (a.createdAt < b.createdAt) {
+                    return action.payload ? 1 : -1;
+                }
+                return 0;
+            });
+            state.articles = sortedArticles;
+        },
     },
 });
 
 export default ArticleSlice.reducer;
 // eslint-disable-next-line react-refresh/only-export-components
-export const { addArticle, addArticles, removeArticle, removeAllArticles } = ArticleSlice.actions;
+export const {
+    addArticle,
+    addArticles,
+    removeArticle,
+    removeAllArticles,
+    searchArticles,
+    sortedArticlesByDate,
+} = ArticleSlice.actions;
