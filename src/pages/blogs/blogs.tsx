@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
-import { Article } from '../../App';
 import './blogs.css';
 import parse from 'html-react-parser';
+import { IArticle } from '../../type.d';
 
 interface BlogsProps {
-    articles: Article[];
+    articles: IArticle[];
     currentPage: number;
+    itemsPerPage?: number;
 }
 
-export const Blogs = ({ articles, currentPage }: BlogsProps) => {
-    const itemsPerPage = 2;
+export const Blogs = ({ articles, currentPage, itemsPerPage = 2 }: BlogsProps) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentItems = articles.slice(startIndex, endIndex);
-
+    console.log("currentItems",currentItems);
     return (
         <ul className="list-unstyled container">
-            {currentItems.map((article: Article) => {
+            {currentItems.map((article: IArticle) => {
                 return (
                     <li
                         className="row media articles-container"
