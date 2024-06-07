@@ -13,8 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Router>
                 <Routes>
                     <Route path="/" element={<App />} />
-                    <Route path="/blogs/:pageId" element={<App />} />
-                    <Route path="/articles/:id" element={<Articles />} />
+                    <Route path="/blogs/:pageId/" element={<App />} >
+                        <Route path="articles/:id" element={<Articles />} />
+                    </Route>
                 </Routes>
             </Router>
         </Provider>

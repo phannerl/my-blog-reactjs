@@ -1,5 +1,5 @@
 export interface IArticle {
-    id: number;
+    id: string;
     title: string;
     content: string;
     image: string;
@@ -8,6 +8,7 @@ export interface IArticle {
 }
 export type ArticleState = {
     articles: IArticle[];
+    articlesSearch: IArticle[];
 };
 
 export type ArticleAction = {

@@ -1,36 +1,62 @@
 import './App.css';
 import { Blogs } from './pages/blogs/blogs';
 import Pagination from './components/paginations';
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from './redux/index';
+import { Outlet, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './redux/index';
 import { FetchData } from './components/fetchData';
-
+import { HeaderNavBar } from './components/headerNavBar';
+import { SearchArticles } from './components/searchArticles';
+import { sortedArticlesByDate } from './redux/store/reducer';
+import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
+import { useState } from 'react';
 
 function App() {
     const articles = useAppSelector((state) => state.articles);
-    const totalPages = Math.ceil(articles.length / 3);
-    const { pageId } = useParams();
-    const itemsPerPage = 3;
+    const articlesSearch = useAppSelector((state) => state.articlesSearch);
+    const currentArticles =
+        articlesSearch.length == 0 ? articles : articlesSearch;
+    const [sortUp, setSortUp] = useState(true);
+    const itemsPerPage = parseInt(import.meta.env.VITE_ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(currentArticles.length / itemsPerPage);
+    const { pageId, id } = useParams();
+    const dispatch = useAppDispatch();
 
     return (
-        <>
-            <div>Home Page</div>
+        <div>
+            <HeaderNavBar />
+            <SearchArticles />
             <div>
-                <span>List blogs</span>
+                <button
+                    onClick={() => {
+                        setSortUp(!sortUp);
+                        dispatch(sortedArticlesByDate(sortUp));
+                    }}>
+                    {' '}
+                    {sortUp ? <FaSortAmountUp /> : <FaSortAmountDown />}
+                    sort by date
+                </button>
+            </div>
+            <div className="mx-5">
                 <FetchData />
-                <Blogs
-                    articles={articles}
-                    currentPage={parseInt(pageId ?? '1')}
-                    itemsPerPage={itemsPerPage}
-                />
+                {id ? (
+                    <Outlet />
+                ) : (
+                    <Blogs
+                        articles={currentArticles}
+                        currentPage={parseInt(pageId ?? '1')}
+                        itemsPerPage={itemsPerPage}
+                    />
+                )}
             </div>
-            <div>
-                <Pagination
-                    currentPage={parseInt(pageId ?? '1')}
-                    totalPages={totalPages}
-                />
+            <div className="pb-4">
+                {!id && (
+                    <Pagination
+                        currentPage={parseInt(pageId ?? '1')}
+                        totalPages={totalPages}
+                    />
+                )}
             </div>
-        </>
+        </div>
     );
 }
 
