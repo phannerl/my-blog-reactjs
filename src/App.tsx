@@ -3,12 +3,12 @@ import { Blogs } from './pages/blogs/blogs';
 import Pagination from './components/paginations';
 import { Outlet, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './redux/index';
-import { FetchData } from './components/fetchData';
 import { HeaderNavBar } from './components/headerNavBar';
 import { SearchArticles } from './components/searchArticles';
 import { sortedArticlesByDate } from './redux/store/reducer';
 import { FaSortAmountDown, FaSortAmountUp } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchArticles } from './redux/store/fetchArticles';
 
 function App() {
     const articles = useAppSelector((state) => state.articles);
@@ -21,12 +21,18 @@ function App() {
     const { pageId, id } = useParams();
     const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        dispatch(fetchArticles(import.meta.env.VITE_API_ARTICLES_URL));
+    }, [dispatch]);
+
     return (
         <div>
             <HeaderNavBar />
             <SearchArticles />
-            <div>
+            <div className='my-3'>
                 <button
+                    className='btn btn-secondary'
+                    type='button'
                     onClick={() => {
                         setSortUp(!sortUp);
                         dispatch(sortedArticlesByDate(sortUp));
@@ -37,7 +43,6 @@ function App() {
                 </button>
             </div>
             <div className="mx-5">
-                <FetchData />
                 {id ? (
                     <Outlet />
                 ) : (

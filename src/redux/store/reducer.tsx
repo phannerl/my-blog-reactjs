@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ArticleState, IArticle } from '../../type.d';
 import { removeDiacritics } from '../../utils';
+import { fetchArticles } from './fetchArticles';
 
 const initialState: ArticleState = {
     articles: [],
@@ -61,6 +62,11 @@ export const ArticleSlice = createSlice({
             });
             state.articles = sortedArticles;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchArticles.fulfilled, (state, action) => {
+            state.articles = action.payload;
+        });
     },
 });
 

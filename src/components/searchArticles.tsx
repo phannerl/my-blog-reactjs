@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 import { useDebounce } from '../hooks/useDebounce';
 import { useAppDispatch } from '../redux';
 import { searchArticles } from '../redux/store/reducer';
@@ -26,11 +25,6 @@ export const SearchArticles = () => {
                     placeholder="Search this blog"
                     onChange={(e) => onSearchArticles(e)}
                 />
-                <div className="input-group-append">
-                    <button className="btn btn-secondary" type="button">
-                        <FaSearch />
-                    </button>
-                </div>
             </div>
         </div>
     );
