@@ -1,62 +1,49 @@
-import { Link } from 'react-router-dom';
-import './blogs.css';
-import parse from 'html-react-parser';
-import { IArticle } from '../../type.d';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux';
+import {
+    fetchArticles,
+    fetchArticlesByPage,
+} from '../../redux/store/fetchArticles';
+import { Col, Container, Row } from 'react-bootstrap';
+import { paramsParser } from '../../utils';
+import { BlogsListComp, DropdownSortedComp, PaginationComp, SearchArticlesComp } from '../../components';
+import { sortParams } from '../../stores';
 
-interface BlogsProps {
-    articles: IArticle[];
-    currentPage: number;
-    itemsPerPage?: number;
-}
+export const Blogs = () => {
+    const allArticles = useAppSelector((state) => state.articles);
+    const totalPages = Math.ceil(
+        allArticles.length / parseInt(import.meta.env.VITE_ITEMS_PER_PAGE),
+    );
 
-export const Blogs = ({
-    articles,
-    currentPage,
-    itemsPerPage = 2,
-}: BlogsProps) => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentItems = articles.slice(startIndex, endIndex);
+    const dispatch = useAppDispatch();
+    const [searchParams] = useSearchParams();
+    const { currentPage, limit, sortBy, order, search } = paramsParser(searchParams);
+
+    useEffect(() => {
+        dispatch(fetchArticles(`${import.meta.env.VITE_API_ARTICLES_URL}?search=${search}`));
+    }, [search]);
+
+    useEffect(() => {
+        dispatch(
+            fetchArticlesByPage(
+                `${import.meta.env.VITE_API_ARTICLES_URL}?page=${currentPage}&limit=${limit}&sortBy=${sortBy}&order=${order}&search=${search}`,
+            ),
+        );
+    }, [dispatch, currentPage, limit, sortBy, order, search]);
 
     return (
-        <ul className="list-unstyled">
-            {currentItems.map((article: IArticle) => {
-                return (
-                    <li className="media mb-2" key={article.id}>
-                        <img
-                            src={article.image}
-                            className="align-self-center mr-3"
-                            style={{ width: '100px' }}
-                            alt="..."
-                        />
-                        <div className="media-body article">
-                            <Link
-                                to={`/blogs/${currentPage}/articles/${article.id}`}
-                                className="page-link text-dark text-left border-0">
-                                <>
-                                    <h4 className="mt-0 mb-1">
-                                        {article.title}
-                                    </h4>
-                                    <div className="article-content">
-                                        <p>{parse(article.description || "")}</p>
-                                        <small>
-                                            {new Date(
-                                                article.createdAt,
-                                            ).toLocaleTimeString('en-US', {
-                                                day: '2-digit',
-                                                month: '2-digit',
-                                                year: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit',
-                                            })}
-                                        </small>
-                                    </div>
-                                </>
-                            </Link>
-                        </div>
-                    </li>
-                );
-            })}
-        </ul>
+        <Container fluid="xs" className='w-100 d-flex flex-column align-items-center justify-content-center px-2'>
+            <Row className='w-100'>
+                <Col md={10} xs={8} className='mb-2'>
+                    <SearchArticlesComp/>
+                </Col>
+                <Col md={2} xs={4}>
+                    <DropdownSortedComp sortParams={sortParams}/>
+                </Col>
+            </Row>
+            <BlogsListComp />
+            <PaginationComp totalPages={totalPages} />
+        </Container>
     );
 };

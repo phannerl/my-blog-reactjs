@@ -1,33 +1,49 @@
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../redux';
+import { useEffect } from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import parse from 'html-react-parser';
+import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../redux';
+import { fetchCurrentArticle } from '../../../redux/store/fetchArticles';
+import { Container, Row } from 'react-bootstrap';
+import { parserText, timeFormatter } from '../../../utils/index';
 
 export const Articles = () => {
-    const { id } = useParams();
-    const article = useAppSelector((state) =>
-        state.articles.find((article) => article.id === id!),
-    );
+    const [searchParams] = useSearchParams();
+    const dispatch = useAppDispatch();
+    const article = useAppSelector((state) => state.currentArticle);
+
+    useEffect(() => {
+        dispatch(
+            fetchCurrentArticle(
+                `${import.meta.env.VITE_API_ARTICLES_URL}/${searchParams.get('id')}`,
+            ),
+        );
+    }, [dispatch, searchParams]);
+
     if (!article) {
         return <div>Article not found</div>;
     }
+
     return (
-        <div className='text-left'>
-            <h1>{article.title}</h1>
-            <div className='mb-2'>
-                <FaRegClock className="mr-1" />
-                <small>
-                    {new Date(article.createdAt).toLocaleTimeString('en-US', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                    })}
-                </small>
-            </div>
-            <p>{parse(article.content || "")}</p>
-            <img src={article.image} alt={article.title} className="w-100" />
-        </div>
+        <Container>
+            <Row className="text-center">
+                <h1>{article.title}</h1>
+            </Row>
+            <Row>
+                <div className="mb-2">
+                    <FaRegClock className="me-1" />
+                    <small>{timeFormatter(article.createdAt, 'en-US')}</small>
+                </div>
+            </Row>
+            <Row className='mb-2'>
+                <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-100"
+                />
+            </Row>
+            <Row className='text-start'>
+                <p>{parserText(article.content)}</p>
+            </Row>
+        </Container>
     );
 };
