@@ -7,8 +7,9 @@ interface PaginationProps {
 }
 
 const PaginationComp = ({ totalPages }: PaginationProps) => {
-    const [searchParams] = useSearchParams();
-    const { currentPage, fullParamsUrlNoPage } = paramsParser(searchParams);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { currentPage, limit, sortBy, order, search  } = paramsParser(searchParams);
+
     const pageNumbers = [];
 
     for (let number = 1; number <= totalPages; number++) {
@@ -21,7 +22,15 @@ const PaginationComp = ({ totalPages }: PaginationProps) => {
                 return (
                     <Pagination.Item
                         key={number}
-                        href={`/blogs?page=${number}&${fullParamsUrlNoPage}`}
+                        onClick={() => {
+                            setSearchParams({
+                                page: number.toString(),
+                                limit: limit.toString(),
+                                sortBy,
+                                order,
+                                search
+                            });
+                        }}
                         className="text-dark text-decoration-none"
                         active={number === currentPage}>
                         {number}

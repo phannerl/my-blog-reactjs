@@ -25,8 +25,7 @@ export const paramsParser = (params: URLSearchParams) => {
     const sortBy = params.get('sortBy') ?? 'id';
     const order = params.get('order') ?? 'asc';
     const search = params.get('search') ?? '';
-    const fullParamsUrl = `page=${currentPage}&limit=${limit}&sortBy=${sortBy}&order=${order}&search=${search}`;
     const fullParamsUrlNoPage = `limit=${limit}&sortBy=${sortBy}&order=${order}&search=${search}`;
     
-    return { currentPage, limit, sortBy, order, search, fullParamsUrl, fullParamsUrlNoPage };
+    return { currentPage, limit, sortBy, order, search, fullParamsUrlNoPage };
 };

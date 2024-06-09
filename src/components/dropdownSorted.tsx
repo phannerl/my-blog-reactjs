@@ -13,11 +13,11 @@ interface IDropdownSortedProps {
     }[];
 }
 
-
-
-const DropdownSortedComp = ({ className = '', sortParams }: IDropdownSortedProps) => {
-    const [searchParams] = useSearchParams();
-    const currentPage = 1;
+const DropdownSortedComp = ({
+    className = '',
+    sortParams,
+}: IDropdownSortedProps) => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const { limit, search } = paramsParser(searchParams);
 
     const handleSort = ({
@@ -27,7 +27,13 @@ const DropdownSortedComp = ({ className = '', sortParams }: IDropdownSortedProps
         order?: string;
         sortBy?: string;
     }) => {
-        return `/blogs?page=${currentPage}&limit=${limit}&order=${order}&orderBy=${sortBy}&search=${search}`;
+        return setSearchParams({
+            page: '1',
+            limit: limit.toString(),
+            sortBy,
+            order,
+            search,
+        });
     };
 
     return (
@@ -42,10 +48,12 @@ const DropdownSortedComp = ({ className = '', sortParams }: IDropdownSortedProps
                         return (
                             <Dropdown.Item
                                 key={param.id}
-                                href={handleSort({
-                                    order: param.order,
-                                    sortBy: param.sortBy,
-                                })}>
+                                onClick={() =>
+                                    handleSort({
+                                        order: param.order,
+                                        sortBy: param.sortBy,
+                                    })
+                                }>
                                 {param.order === 'asc' ? (
                                     <FaSortAmountUp className="me-2" />
                                 ) : (
