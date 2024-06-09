@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ArticleState, IArticle } from '../../type.d';
 import {
     fetchArticles,
     fetchArticlesByPage,
     fetchCurrentArticle,
 } from './fetchArticles';
+import { ArticleState, IArticle } from 'src/type.d';
 
 const initialState: ArticleState = {
     articles: [],
@@ -26,6 +26,12 @@ export const ArticleSlice = createSlice({
                 createdAt: action.payload.createdAt,
             };
             state.articles.push(newArticle);
+        },
+        fetchArticlesSuccess: (state, action) => {
+            state.articles = action.payload;
+        },
+        fetchArticlesByPageSuccess: (state, action) => {
+            state.currentArticles = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -34,6 +40,7 @@ export const ArticleSlice = createSlice({
                 console.log('fetchArticles: loading...');
             })
             .addCase(fetchArticles.fulfilled, (state, action) => {
+                console.log('fetchArticles: success', action.payload);
                 state.articles = action.payload;
             })
             .addCase(fetchArticles.rejected, () => {})
@@ -41,6 +48,7 @@ export const ArticleSlice = createSlice({
                 console.log('fetchArticlesByPage: loading...');
             })
             .addCase(fetchArticlesByPage.fulfilled, (state, action) => {
+                console.log('fetchArticlesByPage: success', action.payload);
                 state.currentArticles = action.payload;
             })
             .addCase(fetchArticlesByPage.rejected, () => {})
@@ -58,4 +66,6 @@ export default ArticleSlice.reducer;
 // eslint-disable-next-line react-refresh/only-export-components
 export const {
     addArticle,
+    fetchArticlesSuccess,
+    fetchArticlesByPageSuccess,
 } = ArticleSlice.actions;

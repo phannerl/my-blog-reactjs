@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import { FaRegClock } from 'react-icons/fa';
 import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../redux';
-import { fetchCurrentArticle } from '../../../redux/store/fetchArticles';
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
-import { parserText, timeFormatter } from '../../../utils/index';
-import FormCreatedUpdateComp from '../../../components/formCreatedUpdate';
+import { FormCreatedUpdateComp } from 'src/components';
+import { useAppDispatch, useAppSelector } from 'src/redux';
+import { fetchCurrentArticle } from 'src/redux/store/fetchArticles';
+import { parserText, timeFormatter } from 'src/utils';
 
 export const Articles = () => {
     const [searchParams] = useSearchParams();

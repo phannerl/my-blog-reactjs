@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux';
-import {
-    fetchArticles,
-    fetchArticlesByPage,
-} from '../../redux/store/fetchArticles';
 import { Col, Container, Row } from 'react-bootstrap';
-import { paramsParser } from '../../utils';
-import { BlogsListComp, DropdownSortedComp, PaginationComp, SearchArticlesComp } from '../../components';
-import { sortParams } from '../../stores';
+import { paramsParser } from 'src/utils';
+import { BlogsListComp, DropdownSortedComp, PaginationComp, SearchArticlesComp } from 'src/components';
+import { sortParams } from 'src/stores';
+import { useAppDispatch, useAppSelector } from 'src/redux';
+import { fetchArticlesAxios, fetchArticlesByPageAxios } from 'src/axios-action';
 
 export const Blogs = () => {
     const allArticles = useAppSelector((state) => state.articles);
@@ -21,13 +18,13 @@ export const Blogs = () => {
     const { currentPage, limit, sortBy, order, search, fullParamsUrlNoPage } = paramsParser(searchParams);
 
     useEffect(() => {
-        dispatch(fetchArticles(`${import.meta.env.VITE_API_ARTICLES_URL}?search=${search}`));
+        dispatch(fetchArticlesAxios(`?search=${search}`));
     }, [dispatch, search]);
 
     useEffect(() => {
         dispatch(
-            fetchArticlesByPage(
-                `${import.meta.env.VITE_API_ARTICLES_URL}?page=${currentPage}&${fullParamsUrlNoPage}`,
+            fetchArticlesByPageAxios(
+                `?page=${currentPage}&${fullParamsUrlNoPage}`,
             ),
         );
         setSearchParams({
