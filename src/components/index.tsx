@@ -1,8 +1,8 @@
 import BlogsListComp from './blogsList'
-import DropdownSortedComp from './dropdownSorted'
-import FormCreatedUpdateComp from './formCreatedUpdate'
+import DropdownSortedComp from './dropdown-sorted'
+import FormCreatedUpdateComp from './form-created-updated'
 import PaginationComp from './paginations'
-import SearchArticlesComp from './searchArticles'
+import SearchArticlesComp from './search-articles'
 
 export {
     PaginationComp,

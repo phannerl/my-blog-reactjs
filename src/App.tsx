@@ -1,6 +1,6 @@
 import { Outlet, useSearchParams } from 'react-router-dom'
 import './App.css'
-import { HeaderNavBar } from './components/headerNavBar'
+import { HeaderNavBar } from './components/header-navbar'
 import { Blogs } from './pages/blogs/blogs'
 
 function App() {
