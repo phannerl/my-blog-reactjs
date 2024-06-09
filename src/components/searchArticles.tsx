@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
-import { useAppDispatch } from '../redux';
-import { searchArticles } from '../redux/store/reducer';
 
-export const SearchArticles = () => {
+interface ISearchArticlesProps {
+    className?: string;
+}
+
+const SearchArticlesComp = ({ className = '' }: ISearchArticlesProps) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const debouncedSearchTerm = useDebounce(searchTerm, 100);
-    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
     useEffect(() => {
-        dispatch(searchArticles(debouncedSearchTerm));
-    }, [debouncedSearchTerm, dispatch]);
+        if (debouncedSearchTerm != null) {
+            navigate(`/blogs?search=${debouncedSearchTerm}`);
+        }
+    }, [debouncedSearchTerm, navigate]);
 
     const onSearchArticles = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
 
     return (
-        <div className="mx-5">
+        <div className={className}>
             <div className="input-group">
                 <input
                     type="text"
@@ -29,3 +35,5 @@ export const SearchArticles = () => {
         </div>
     );
 };
+
+export default SearchArticlesComp;
