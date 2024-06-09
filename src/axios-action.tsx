@@ -1,9 +1,11 @@
 import axiosInstance from './axios-instance'
+import { addArticle, editArticle } from 'src/redux/store/reducer';
 import {
     fetchArticlesByPageSuccess,
     fetchArticlesSuccess,
     fetchCurrentArticleSuccess,
 } from './redux/store/reducer'
+import { IAddArticle, IArticle } from './type.d';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchArticlesAxios = (search: string) => async (dispatch: any) => {
@@ -37,3 +39,23 @@ export const fetchCurrentArticleAxios =
             console.log('fetchCurrentArticleSuccess: failed')
         }
     }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const editArticleAxios = (data: IArticle) => async (dispatch: any) => {
+    const response = await axiosInstance.put(`/${data.id}`, data)
+    if (response.status === 200) {
+        dispatch(editArticle(data))
+    } else {
+        console.log('editArticleAxios: failed')
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addArticleAxios = (data: IAddArticle) => async (dispatch: any) => {
+    const response = await axiosInstance.post('/', data)
+    if (response.status === 201) {
+        dispatch(addArticle(data))
+    } else {
+        console.log('addArticleAxios: failed')
+    }
+}
