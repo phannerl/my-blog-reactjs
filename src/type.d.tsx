@@ -6,9 +6,11 @@ export interface IArticle {
     description: string;
     createdAt: string;
 }
+
 export type ArticleState = {
     articles: IArticle[];
-    articlesSearch: IArticle[];
+    currentArticles: IArticle[];
+    currentArticle: IArticle | null;
 };
 
 export type ArticleAction = {
