@@ -1,9 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-    fetchArticles,
-    fetchArticlesByPage,
-    fetchCurrentArticle,
-} from './fetchArticles'
 import { ArticleState, IArticle } from 'src/type.d'
 
 const initialState: ArticleState = {
@@ -18,7 +13,7 @@ export const ArticleSlice = createSlice({
     reducers: {
         addArticle: (state, action) => {
             const newArticle: IArticle = {
-                id: Math.random().toString(),
+                id: action.payload.id,
                 title: action.payload.title,
                 content: action.payload.content,
                 image: action.payload.img,
@@ -26,6 +21,15 @@ export const ArticleSlice = createSlice({
                 createdAt: action.payload.createdAt,
             }
             state.articles.push(newArticle)
+        },
+        editArticle: (state, action) => {
+            const article = state.currentArticle
+            if (article) {
+                article.title = action.payload.title
+                article.content = action.payload.content
+                article.image = action.payload.img
+                article.description = action.payload.description
+            }
         },
         fetchArticlesSuccess: (state, action) => {
             state.articles = action.payload
@@ -36,36 +40,10 @@ export const ArticleSlice = createSlice({
         fetchCurrentArticleSuccess: (state, action) => {
             state.currentArticle = action.payload
         }
-    },
-    extraReducers: builder => {
-        builder
-            .addCase(fetchArticles.pending, () => {
-                console.log('fetchArticles: loading...')
-            })
-            .addCase(fetchArticles.fulfilled, (state, action) => {
-                console.log('fetchArticles: success', action.payload)
-                state.articles = action.payload
-            })
-            .addCase(fetchArticles.rejected, () => {})
-            .addCase(fetchArticlesByPage.pending, () => {
-                console.log('fetchArticlesByPage: loading...')
-            })
-            .addCase(fetchArticlesByPage.fulfilled, (state, action) => {
-                console.log('fetchArticlesByPage: success', action.payload)
-                state.currentArticles = action.payload
-            })
-            .addCase(fetchArticlesByPage.rejected, () => {})
-            .addCase(fetchCurrentArticle.pending, () => {
-                console.log('fetchCurrentArticle: loading...')
-            })
-            .addCase(fetchCurrentArticle.fulfilled, (state, action) => {
-                state.currentArticle = action.payload
-            })
-            .addCase(fetchCurrentArticle.rejected, () => {})
-    },
+    }
 })
 
 export default ArticleSlice.reducer
 // eslint-disable-next-line react-refresh/only-export-components
-export const { addArticle, fetchArticlesSuccess, fetchArticlesByPageSuccess, fetchCurrentArticleSuccess } =
+export const { addArticle, editArticle, fetchArticlesSuccess, fetchArticlesByPageSuccess, fetchCurrentArticleSuccess } =
     ArticleSlice.actions

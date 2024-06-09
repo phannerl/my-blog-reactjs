@@ -2,7 +2,15 @@ export interface IArticle {
     id: string
     title: string
     content: string
-    image: string
+    image: string | undefined
+    description: string
+    createdAt: string
+}
+
+export interface IAddArticle {
+    title: string
+    content: string
+    image: string | undefined
     description: string
     createdAt: string
 }
