@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useDebounce } from '../hooks/useDebounce'
 import { useAppDispatch } from '../redux'
-import { fetchArticles } from '../redux/store/fetchArticles'
 import { useSearchParams } from 'react-router-dom'
 import { paramsParser } from '../utils'
 import { Form, InputGroup } from 'react-bootstrap'
+import { fetchArticlesAxios } from 'src/axios-action'
 
 interface ISearchArticlesProps {
     className?: string
 }
 
-const SearchArticlesComp = ({ className = '' }: ISearchArticlesProps) => {
+const SearchArticlesComp = memo(({ className = '' }: ISearchArticlesProps) => {
     const dispatch = useAppDispatch()
     const [searchTerm, setSearchTerm] = useState('')
     const [searchParams, setSearchParams] = useSearchParams()
     const { limit, sortBy, order } = paramsParser(searchParams)
     const debouncedSearchTerm = useDebounce(searchTerm, 500)
-
+    
     useEffect(() => {
+        console.log('debouncedSearchTerm', debouncedSearchTerm)
         dispatch(
-            fetchArticles(
+            fetchArticlesAxios(
                 `${import.meta.env.VITE_API_ARTICLES_URL}?search=${debouncedSearchTerm}`,
             ),
         )
@@ -54,6 +55,6 @@ const SearchArticlesComp = ({ className = '' }: ISearchArticlesProps) => {
             </InputGroup>
         </div>
     )
-}
+})
 
 export default SearchArticlesComp

@@ -5,6 +5,8 @@ import FormCreatedUpdateComp from './form-created-updated'
 import HeaderArticleComp from './header-article'
 import PaginationComp from './paginations'
 import SearchArticlesComp from './search-articles'
+import ModalFormsComp from './modal-forms'
+import GroupFeatures from './group-features'
 
 export {
     PaginationComp,
@@ -14,4 +16,6 @@ export {
     FormCreatedUpdateComp,
     HeaderArticleComp,
     FooterComp,
+    ModalFormsComp,
+    GroupFeatures,
 }
