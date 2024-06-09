@@ -33,6 +33,9 @@ export const ArticleSlice = createSlice({
         fetchArticlesByPageSuccess: (state, action) => {
             state.currentArticles = action.payload
         },
+        fetchCurrentArticleSuccess: (state, action) => {
+            state.currentArticle = action.payload
+        }
     },
     extraReducers: builder => {
         builder
@@ -64,5 +67,5 @@ export const ArticleSlice = createSlice({
 
 export default ArticleSlice.reducer
 // eslint-disable-next-line react-refresh/only-export-components
-export const { addArticle, fetchArticlesSuccess, fetchArticlesByPageSuccess } =
+export const { addArticle, fetchArticlesSuccess, fetchArticlesByPageSuccess, fetchCurrentArticleSuccess } =
     ArticleSlice.actions

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
 import { FaRegClock } from 'react-icons/fa'
-import { useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { fetchCurrentArticleAxios } from 'src/axios-action'
 import { FormCreatedUpdateComp } from 'src/components'
 import { useAppDispatch, useAppSelector } from 'src/redux'
-import { fetchCurrentArticle } from 'src/redux/store/fetchArticles'
 import { parserText, timeFormatter } from 'src/utils'
 
 export const Articles = () => {
-    const [searchParams] = useSearchParams()
+    const { articleId } = useParams()
     const dispatch = useAppDispatch()
     const article = useAppSelector(state => state.currentArticle)
     const [show, setShow] = useState(false)
@@ -17,12 +17,8 @@ export const Articles = () => {
     const handleShow = () => setShow(true)
 
     useEffect(() => {
-        dispatch(
-            fetchCurrentArticle(
-                `${import.meta.env.VITE_API_ARTICLES_URL}/${searchParams.get('id')}`,
-            ),
-        )
-    }, [dispatch, searchParams])
+        dispatch(fetchCurrentArticleAxios(`/${articleId}`))
+    }, [dispatch, articleId])
 
     if (!article) {
         return <div>Article not found</div>
