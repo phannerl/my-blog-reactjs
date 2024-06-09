@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ArticleState, IArticle } from '../../type.d';
-import { removeDiacritics } from '../../utils';
-import { fetchArticles } from './fetchArticles';
+import {
+    fetchArticles,
+    fetchArticlesByPage,
+    fetchCurrentArticle,
+} from './fetchArticles';
 
 const initialState: ArticleState = {
     articles: [],
-    articlesSearch: [],
+    currentArticles: [],
+    currentArticle: null,
 };
 
 export const ArticleSlice = createSlice({
@@ -22,51 +26,31 @@ export const ArticleSlice = createSlice({
                 createdAt: action.payload.createdAt,
             };
             state.articles.push(newArticle);
-        },
-        addArticles: (state, action) => {
-            for (const article of action.payload) {
-                if (!state.articles.find((a) => a.id === article.id)) {
-                    state.articles.push(article);
-                }
-            }
-        },
-        removeArticle: (state, action) => {
-            state.articles = state.articles.filter(
-                (article) => article.id !== action.payload.id,
-            );
-        },
-        removeAllArticles: (state) => {
-            state.articles = [];
-        },
-        searchArticles: (state, action) => {
-            if (action.payload === '') {
-                state.articlesSearch = state.articles;
-                return;
-            }
-            const searchResult = state.articles.filter((article) =>
-                removeDiacritics(article.title.toLowerCase()).includes(
-                    removeDiacritics(action.payload).toLowerCase(),
-                ),
-            );
-            state.articlesSearch = searchResult;
-        },
-        sortedArticlesByDate: (state, action) => {
-            const sortedArticles = [...state.articles].sort((a, b) => {
-                if (a.createdAt > b.createdAt) {
-                    return action.payload ? -1 : 1;
-                }
-                if (a.createdAt < b.createdAt) {
-                    return action.payload ? 1 : -1;
-                }
-                return 0;
-            });
-            state.articles = sortedArticles;
-        },
+        }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchArticles.fulfilled, (state, action) => {
-            state.articles = action.payload;
-        });
+        builder
+            .addCase(fetchArticles.pending, () => {
+                console.log('fetchArticles: loading...');
+            })
+            .addCase(fetchArticles.fulfilled, (state, action) => {
+                state.articles = action.payload;
+            })
+            .addCase(fetchArticles.rejected, () => {})
+            .addCase(fetchArticlesByPage.pending, () => {
+                console.log('fetchArticlesByPage: loading...');
+            })
+            .addCase(fetchArticlesByPage.fulfilled, (state, action) => {
+                state.currentArticles = action.payload;
+            })
+            .addCase(fetchArticlesByPage.rejected, () => {})
+            .addCase(fetchCurrentArticle.pending, () => {
+                console.log('fetchCurrentArticle: loading...');
+            })
+            .addCase(fetchCurrentArticle.fulfilled, (state, action) => {
+                state.currentArticle = action.payload;
+            })
+            .addCase(fetchCurrentArticle.rejected, () => {})
     },
 });
 
@@ -74,9 +58,4 @@ export default ArticleSlice.reducer;
 // eslint-disable-next-line react-refresh/only-export-components
 export const {
     addArticle,
-    addArticles,
-    removeArticle,
-    removeAllArticles,
-    searchArticles,
-    sortedArticlesByDate,
 } = ArticleSlice.actions;
