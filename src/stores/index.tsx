@@ -23,4 +23,4 @@ export const sortParams = [
         sortBy: 'createdAt',
         title: 'Date Created',
     },
-];
+]

@@ -1,43 +1,43 @@
-import { useEffect, useState } from 'react';
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
-import { FaRegClock } from 'react-icons/fa';
-import { useSearchParams } from 'react-router-dom';
-import { FormCreatedUpdateComp } from 'src/components';
-import { useAppDispatch, useAppSelector } from 'src/redux';
-import { fetchCurrentArticle } from 'src/redux/store/fetchArticles';
-import { parserText, timeFormatter } from 'src/utils';
+import { useEffect, useState } from 'react'
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
+import { FaRegClock } from 'react-icons/fa'
+import { useSearchParams } from 'react-router-dom'
+import { FormCreatedUpdateComp } from 'src/components'
+import { useAppDispatch, useAppSelector } from 'src/redux'
+import { fetchCurrentArticle } from 'src/redux/store/fetchArticles'
+import { parserText, timeFormatter } from 'src/utils'
 
 export const Articles = () => {
-    const [searchParams] = useSearchParams();
-    const dispatch = useAppDispatch();
-    const article = useAppSelector((state) => state.currentArticle);
-    const [show, setShow] = useState(false);
+    const [searchParams] = useSearchParams()
+    const dispatch = useAppDispatch()
+    const article = useAppSelector(state => state.currentArticle)
+    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     useEffect(() => {
         dispatch(
             fetchCurrentArticle(
                 `${import.meta.env.VITE_API_ARTICLES_URL}/${searchParams.get('id')}`,
             ),
-        );
-    }, [dispatch, searchParams]);
+        )
+    }, [dispatch, searchParams])
 
     if (!article) {
-        return <div>Article not found</div>;
+        return <div>Article not found</div>
     }
 
     return (
         <Container>
-            <Row className="text-center">
+            <Row className='text-center'>
                 <Container>
                     <Row>
                         <Col>
                             <h1>{article.title}</h1>
                         </Col>
                         <Col>
-                            <Button variant="primary" onClick={handleShow}>
+                            <Button variant='primary' onClick={handleShow}>
                                 Launch demo modal
                             </Button>
 
@@ -54,21 +54,21 @@ export const Articles = () => {
                 </Container>
             </Row>
             <Row>
-                <div className="mb-2">
-                    <FaRegClock className="me-1" />
+                <div className='mb-2'>
+                    <FaRegClock className='me-1' />
                     <small>{timeFormatter(article.createdAt, 'en-US')}</small>
                 </div>
             </Row>
-            <Row className="mb-2">
+            <Row className='mb-2'>
                 <img
                     src={article.image}
                     alt={article.title}
-                    className="w-100"
+                    className='w-100'
                 />
             </Row>
-            <Row className="text-start">
+            <Row className='text-start'>
                 <p>{parserText(article.content)}</p>
             </Row>
         </Container>
-    );
-};
+    )
+}

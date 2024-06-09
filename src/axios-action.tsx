@@ -1,27 +1,27 @@
-import axiosInstance from './axios-instance';
+import axiosInstance from './axios-instance'
 import {
     fetchArticlesByPageSuccess,
     fetchArticlesSuccess,
-} from './redux/store/reducer';
+} from './redux/store/reducer'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchArticlesAxios = (search: string) => async (dispatch: any) => {
-    const response = await axiosInstance.get(search);
-    console.log('fetchArticlesAxios: success', response.status);
+    const response = await axiosInstance.get(search)
+    console.log('fetchArticlesAxios: success', response.status)
     if (response.status === 200) {
-        dispatch(fetchArticlesSuccess(response.data));
+        dispatch(fetchArticlesSuccess(response.data))
     } else {
-        console.log('fetchArticlesAxios: failed');
+        console.log('fetchArticlesAxios: failed')
     }
-};
+}
 
 export const fetchArticlesByPageAxios =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (search: string) => async (dispatch: any) => {
-        const response = await axiosInstance.get(search);
+        const response = await axiosInstance.get(search)
         if (response.status === 200) {
-            dispatch(fetchArticlesByPageSuccess(response.data));
+            dispatch(fetchArticlesByPageSuccess(response.data))
         } else {
-            console.log('fetchArticlesByPageAxios: failed');
+            console.log('fetchArticlesByPageAxios: failed')
         }
-    };
+    }

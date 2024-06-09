@@ -1,24 +1,25 @@
-import Pagination from 'react-bootstrap/Pagination';
-import { useSearchParams } from 'react-router-dom';
-import { paramsParser } from '../utils';
+import Pagination from 'react-bootstrap/Pagination'
+import { useSearchParams } from 'react-router-dom'
+import { paramsParser } from '../utils'
 
 interface PaginationProps {
-    totalPages: number;
+    totalPages: number
 }
 
 const PaginationComp = ({ totalPages }: PaginationProps) => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const { currentPage, limit, sortBy, order, search  } = paramsParser(searchParams);
+    const [searchParams, setSearchParams] = useSearchParams()
+    const { currentPage, limit, sortBy, order, search } =
+        paramsParser(searchParams)
 
-    const pageNumbers = [];
+    const pageNumbers = []
 
     for (let number = 1; number <= totalPages; number++) {
-        pageNumbers.push(number);
+        pageNumbers.push(number)
     }
 
     return (
         <Pagination>
-            {pageNumbers.map((number) => {
+            {pageNumbers.map(number => {
                 return (
                     <Pagination.Item
                         key={number}
@@ -28,17 +29,18 @@ const PaginationComp = ({ totalPages }: PaginationProps) => {
                                 limit: limit.toString(),
                                 sortBy,
                                 order,
-                                search
-                            });
+                                search,
+                            })
                         }}
-                        className="text-dark text-decoration-none"
-                        active={number === currentPage}>
+                        className='text-dark text-decoration-none'
+                        active={number === currentPage}
+                    >
                         {number}
                     </Pagination.Item>
-                );
+                )
             })}
         </Pagination>
-    );
-};
+    )
+}
 
-export default PaginationComp;
+export default PaginationComp

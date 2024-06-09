@@ -1,21 +1,21 @@
 export interface IArticle {
-    id: string;
-    title: string;
-    content: string;
-    image: string;
-    description: string;
-    createdAt: string;
+    id: string
+    title: string
+    content: string
+    image: string
+    description: string
+    createdAt: string
 }
 
 export type ArticleState = {
-    articles: IArticle[];
-    currentArticles: IArticle[];
-    currentArticle: IArticle | null;
-};
+    articles: IArticle[]
+    currentArticles: IArticle[]
+    currentArticle: IArticle | null
+}
 
 export type ArticleAction = {
-    type: string;
-    article: IArticle;
-};
+    type: string
+    article: IArticle
+}
 
-export type DispatchType = (args: ArticleAction) => ArticleAction;
+export type DispatchType = (args: ArticleAction) => ArticleAction
