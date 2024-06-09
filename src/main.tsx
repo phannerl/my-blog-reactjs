@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                         element={<Navigate replace to='/blogs' />}
                     />
                     <Route path='/blogs' element={<App />}>
-                        <Route path='articles' element={<Articles />} />
+                        <Route path='articles/:articleId' element={<Articles />} />
                     </Route>
                 </Routes>
             </Router>

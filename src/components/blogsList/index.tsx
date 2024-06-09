@@ -20,7 +20,7 @@ const BlogsListComp = () => {
                             <Row>
                                 <Col>
                                     <Link
-                                        to={`/blogs/articles?id=${article.id}`}
+                                        to={`/blogs/articles/${article.id}`}
                                         className='page-link text-dark border-0 d-flex flex-column align-items-start'
                                     >
                                         <Card className='card-constent w-100'>
