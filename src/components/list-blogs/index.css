@@ -1,0 +1,21 @@
+.card-constent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 0;
+}
+
+.card-constent img {
+    width: 100px;
+}
+
+@media (max-width: 575.98px) {
+    .card-constent {
+        flex-direction: column;
+        border: 1px solid #e9ecef;
+    }
+
+    .card-constent img {
+        width: 100%;
+    }
+}

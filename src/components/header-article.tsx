@@ -12,14 +12,14 @@ const HeaderArticleComp = ({ title }: HeaderArticleProps) => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
     return (
-    <Container>
+    <Container fluid='sm'>
         <Row>
-            <Col>
+            <Col className="col-sm-8">
                 <h1>{title}</h1>
             </Col>
-            <Col>
+            <Col className="col-sm-4">
                 <Button variant='primary' onClick={handleShow}>
-                    Launch demo modal
+                    Edit
                 </Button>
 
                 <Modal show={show} onHide={handleClose}>
