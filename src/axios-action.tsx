@@ -1,8 +1,9 @@
+import { toast } from 'sonner'
 import { fetcher } from './api/fetch'
 import {
     addArticle,
     editArticle,
-    fetchArticlesByPageSuccess,
+    fetchArticlesPerPageSuccess,
     fetchArticlesSuccess,
     fetchCurrentArticleSuccess,
 } from './redux/store/reducer'
@@ -11,11 +12,12 @@ import { IAddArticle, IArticle } from './type.d'
 export const getAllArticles =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (data: { search: string }) => async (dispatch: any) => {
-        const response = await fetcher.get('/blogs', { params: data })
-        if (response.status === 200) {
-            dispatch(fetchArticlesSuccess(response.data))
-        } else {
-            console.log('fetchArticlesAxios: failed')
+        try {
+            const response = await fetcher.get('/blogs', { params: data })
+            dispatch(fetchArticlesSuccess(response?.data))
+            toast.success('fetchArticlesSuccess: success')
+        } catch (error) {
+            toast.error(`fetchArticlesSuccess Error: ${error.message}: ${error.response.data}`)
         }
     }
 
@@ -29,41 +31,45 @@ export const getArticles =
     }) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (dispatch: any) => {
-        const response = await fetcher.get('/blogs', { params: data })
-        if (response.status === 200) {
-            dispatch(fetchArticlesByPageSuccess(response.data))
-        } else {
-            console.log('fetchArticlesAxios: failed')
+        try {
+            const response = await fetcher.get('/blogs', { params: data })
+            dispatch(fetchArticlesPerPageSuccess(response?.data))
+            toast.success('fetchArticlesPerPageSuccess: success')
+        } catch (error) {
+            toast.error(`fetchArticlesPerPageSuccess Error: ${error.message}: ${error.response.data}`)
         }
     }
 
 export const fetchCurrentArticleAxios =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (articleId: string) => async (dispatch: any) => {
-        const response = await fetcher.get(`/blogs/${articleId}`)
-        if (response.status === 200) {
-            dispatch(fetchCurrentArticleSuccess(response.data))
-        } else {
-            console.log('fetchCurrentArticleSuccess: failed')
+        try {
+            const response = await fetcher.get(`/blogs/${articleId}`)
+            dispatch(fetchCurrentArticleSuccess(response?.data))
+            toast.success('fetchCurrentArticleSuccess: success')
+        } catch (error) {
+            toast.error(`fetchCurrentArticleSuccess Error: ${error.message}: ${error.response.data}`)
         }
     }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const editArticleAxios = (data: IArticle) => async (dispatch: any) => {
-    const response = await fetcher.put(`/blogs/${data.id}`, data)
-    if (response.status === 200) {
+    try {
+        await fetcher.put(`/blogs/${data.id}`, data)
         dispatch(editArticle(data))
-    } else {
-        console.log('editArticleAxios: failed')
+        toast.success('editArticleAxios: success')
+    } catch (error) {
+        toast.error(`editArticleAxios Error: ${error.message}: ${error.response.data}`)
     }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addArticleAxios = (data: IAddArticle) => async (dispatch: any) => {
-    const response = await fetcher.post('/blogs', data)
-    if (response.status === 201) {
+    try {
+        await fetcher.post('/blogs', data)
         dispatch(addArticle(data))
-    } else {
-        console.log('addArticleAxios: failed')
+        toast.success('addArticleAxios: success')
+    } catch (error) {
+        toast.error(`addArticleAxios Error: ${error.message}: ${error.response.data}`)
     }
 }

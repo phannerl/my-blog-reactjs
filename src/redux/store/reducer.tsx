@@ -34,16 +34,21 @@ export const ArticleSlice = createSlice({
         fetchArticlesSuccess: (state, action) => {
             state.articles = action.payload
         },
-        fetchArticlesByPageSuccess: (state, action) => {
+        fetchArticlesPerPageSuccess: (state, action) => {
             state.currentArticles = action.payload
         },
         fetchCurrentArticleSuccess: (state, action) => {
             state.currentArticle = action.payload
-        }
-    }
+        },
+    },
 })
 
 export default ArticleSlice.reducer
 // eslint-disable-next-line react-refresh/only-export-components
-export const { addArticle, editArticle, fetchArticlesSuccess, fetchArticlesByPageSuccess, fetchCurrentArticleSuccess } =
-    ArticleSlice.actions
+export const {
+    addArticle,
+    editArticle,
+    fetchArticlesSuccess,
+    fetchArticlesPerPageSuccess,
+    fetchCurrentArticleSuccess,
+} = ArticleSlice.actions
