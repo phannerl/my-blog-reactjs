@@ -1,7 +1,7 @@
-import { Col, Container, Row } from "react-bootstrap"
-import SearchArticlesComp from "./search-articles"
-import { DropdownSortedComp, ModalFormsComp } from "."
 import { sortParams } from "@/stores"
+import { Row } from "react-bootstrap"
+import { DropdownSortedComp, ModalFormsComp } from "."
+import SearchArticlesComp from "./search-articles"
 
 const GroupFeatures = () => {
     
