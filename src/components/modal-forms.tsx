@@ -1,12 +1,11 @@
-import { Button, Modal } from 'react-bootstrap'
-import { FormCreatedUpdateComp } from '.'
+import { IArticle } from '@/type.d'
 import { useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 import { FaEdit, FaPlusCircle } from 'react-icons/fa'
-import { useAppSelector } from '@/redux'
+import { FormCreatedUpdateComp } from '.'
 
 
-const ModalFormsComp = ({articleId}: {articleId: string | undefined}) => {
-    const articleCurrent = useAppSelector(state => state.currentArticle)
+const ModalFormsComp = ({articleId, articleCurrent}: {articleId?: string , articleCurrent?: IArticle }) => {
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)

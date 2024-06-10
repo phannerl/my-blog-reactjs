@@ -1,6 +1,7 @@
 import { FooterComp, HeaderNavBarComp } from '@/components'
 import { Container } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom'
+import { Toaster } from 'sonner'
 
 const PageLayout = () => {
     return (
@@ -13,6 +14,7 @@ const PageLayout = () => {
                 <Outlet />
                 <FooterComp />
             </Container>
+            <Toaster expand={true}/>
         </>
     )
 }

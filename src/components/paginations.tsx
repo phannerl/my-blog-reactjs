@@ -4,12 +4,14 @@ import { paramsParser } from '../utils'
 import { useAppSelector } from '@/redux'
 
 const PaginationComp = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
     const allArticles = useAppSelector(state => state.articles)
+    
+    if (!allArticles || allArticles.length === 0) return <></>
+
     const totalPages = Math.ceil(
         allArticles.length / parseInt(import.meta.env.VITE_ITEMS_PER_PAGE),
     )
-    
-    const [searchParams, setSearchParams] = useSearchParams()
     const { currentPage, limit, sortBy, order, search } =
         paramsParser(searchParams)
 

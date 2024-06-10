@@ -24,7 +24,7 @@ const Articles = () => {
 
     return (
         <>
-            <HeaderArticleComp title={article.title} />
+            <HeaderArticleComp articleCurrent={article} title={article.title} />
             <Row>
                 <div className='mb-2'>
                     <FaRegClock className='me-1' />

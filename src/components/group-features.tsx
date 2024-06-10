@@ -10,7 +10,7 @@ const GroupFeatures = () => {
             <div className='d-flex justify-content-end gap-2 align-items-center mb-2'>
                 <SearchArticlesComp className='d-flex justify-content-center' />
                 <DropdownSortedComp sortParams={sortParams} />
-                <ModalFormsComp articleId={undefined} />
+                <ModalFormsComp />
             </div>
         </Row>
     )

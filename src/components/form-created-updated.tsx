@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { IArticle } from '@/type.d'
 import { addArticleAxios, editArticleAxios } from '@/axios-action'
 
-
 interface IFormInputs {
     title: string
     description: string
