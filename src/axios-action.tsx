@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { toast } from 'sonner'
 import { fetcher } from './api/fetch'
 import {
@@ -15,9 +16,13 @@ export const getAllArticles =
         try {
             const response = await fetcher.get('/blogs', { params: data })
             dispatch(fetchArticlesSuccess(response?.data))
-            toast.success('fetchArticlesSuccess: success')
+            toast.success('getAllArticles: success')
         } catch (error) {
-            toast.error(`fetchArticlesSuccess Error: ${error.message}: ${error.response.data}`)
+            if(axios.isAxiosError(error)) {
+                toast.error(`getAllArticles Error: ${error.message}: ${error.response?.data}`)
+            } else {
+                toast.error(`getAllArticles Error: ${(error as Error).message}`)
+            }
         }
     }
 
@@ -34,21 +39,29 @@ export const getArticles =
         try {
             const response = await fetcher.get('/blogs', { params: data })
             dispatch(fetchArticlesPerPageSuccess(response?.data))
-            toast.success('fetchArticlesPerPageSuccess: success')
+            toast.success('getArticles: success')
         } catch (error) {
-            toast.error(`fetchArticlesPerPageSuccess Error: ${error.message}: ${error.response.data}`)
+            if(axios.isAxiosError(error)) {
+                toast.error(`getArticles Error: ${error.message}: ${error.response?.data}`)
+            } else {
+                toast.error(`getArticles Error: ${(error as Error).message}`)
+            }
         }
     }
 
-export const fetchCurrentArticleAxios =
+export const fetchCurrentArticle =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (articleId: string) => async (dispatch: any) => {
         try {
             const response = await fetcher.get(`/blogs/${articleId}`)
             dispatch(fetchCurrentArticleSuccess(response?.data))
-            toast.success('fetchCurrentArticleSuccess: success')
+            toast.success('fetchCurrentArticle: success')
         } catch (error) {
-            toast.error(`fetchCurrentArticleSuccess Error: ${error.message}: ${error.response.data}`)
+            if(axios.isAxiosError(error)) {
+                toast.error(`fetchCurrentArticle Error: ${error.message}: ${error.response?.data}`)
+            } else {
+                toast.error(`fetchCurrentArticle Error: ${(error as Error).message}`)
+            }
         }
     }
 
@@ -57,9 +70,13 @@ export const editArticleAxios = (data: IArticle) => async (dispatch: any) => {
     try {
         await fetcher.put(`/blogs/${data.id}`, data)
         dispatch(editArticle(data))
-        toast.success('editArticleAxios: success')
+        toast.success('editArticle: success')
     } catch (error) {
-        toast.error(`editArticleAxios Error: ${error.message}: ${error.response.data}`)
+        if(axios.isAxiosError(error)) {
+            toast.error(`editArticle Error: ${error.message}: ${error.response?.data}`)
+        } else {
+            toast.error(`editArticle Error: ${(error as Error).message}`)
+        }
     }
 }
 
@@ -70,6 +87,10 @@ export const addArticleAxios = (data: IAddArticle) => async (dispatch: any) => {
         dispatch(addArticle(data))
         toast.success('addArticleAxios: success')
     } catch (error) {
-        toast.error(`addArticleAxios Error: ${error.message}: ${error.response.data}`)
+        if(axios.isAxiosError(error)) {
+            toast.error(`addArticleAxios Error: ${error.message}: ${error.response?.data}`)
+        } else {
+            toast.error(`addArticleAxios Error: ${(error as Error).message}`)
+        }
     }
 }

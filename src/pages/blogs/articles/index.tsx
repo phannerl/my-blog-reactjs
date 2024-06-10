@@ -1,4 +1,4 @@
-import { fetchCurrentArticleAxios } from '@/axios-action'
+import { fetchCurrentArticle } from '@/axios-action'
 import { HeaderArticleComp } from '@/components'
 import Loading from '@/components/loading'
 import { useAppDispatch, useAppSelector } from '@/redux'
@@ -15,7 +15,7 @@ const Articles = () => {
     const article = useAppSelector(state => state.currentArticle)
 
     useEffect(() => {
-        dispatch(fetchCurrentArticleAxios(articleId!))
+        dispatch(fetchCurrentArticle(articleId!))
     }, [dispatch, articleId])
 
     if (!article) {
