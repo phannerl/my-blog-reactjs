@@ -13,6 +13,7 @@ import './index.css'
 import BlogsLayout from './pages/blogs/layout.tsx'
 import PageLayout from './pages/layout.tsx'
 import store from './redux/index.tsx'
+import Blogs from './pages/blogs/index.tsx'
 
 // eslint-disable-next-line react-refresh/only-export-components
 const ArticlesPage = React.lazy(
@@ -31,6 +32,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                         />
                         <Route element={<PageLayout />}>
                             <Route path='blogs' element={<BlogsLayout />}>
+                                <Route
+                                    path=''
+                                    element={<Blogs />}
+                                />
                                 <Route
                                     path='articles/:articleId'
                                     element={<ArticlesPage />}

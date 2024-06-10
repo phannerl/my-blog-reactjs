@@ -2,35 +2,22 @@ import { useEffect, useState } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import { useSearchParams } from 'react-router-dom'
 import { useDebounce } from '../hooks/useDebounce'
-import { useAppDispatch } from '../redux'
-import { paramsParser } from '../utils'
-import { fetchArticlesAxios } from '@/axios-action'
 
 interface ISearchArticlesProps {
     className?: string
 }
 
 const SearchArticlesComp = ({ className = '' }: ISearchArticlesProps) => {
-    const dispatch = useAppDispatch()
     const [searchTerm, setSearchTerm] = useState('')
-    const [searchParams, setSearchParams] = useSearchParams()
-    const { limit, sortBy, order } = paramsParser(searchParams)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, setSearchParams] = useSearchParams()
     const debouncedSearchTerm = useDebounce(searchTerm, 500)
 
     useEffect(() => {
-        dispatch(
-            fetchArticlesAxios(
-                `${import.meta.env.VITE_API_ARTICLES_URL}?search=${debouncedSearchTerm}`,
-            ),
-        )
         setSearchParams({
-            page: '1',
-            limit: limit.toString(),
-            sortBy,
-            order,
             search: debouncedSearchTerm,
         })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm])
 
     const onSearchArticles = (
@@ -39,9 +26,10 @@ const SearchArticlesComp = ({ className = '' }: ISearchArticlesProps) => {
         setSearchTerm(e.target.value)
     }
 
+
     return (
         <div className={className}>
-            <InputGroup className='mb-3 w-70'>
+            <InputGroup className='w-70'>
                 <InputGroup.Text id='inputGroup-sizing-default'>
                     Search
                 </InputGroup.Text>

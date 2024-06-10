@@ -15,7 +15,7 @@ const Articles = () => {
     const article = useAppSelector(state => state.currentArticle)
 
     useEffect(() => {
-        dispatch(fetchCurrentArticleAxios(`/${articleId}`))
+        dispatch(fetchCurrentArticleAxios(articleId!))
     }, [dispatch, articleId])
 
     if (!article) {

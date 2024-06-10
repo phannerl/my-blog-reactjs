@@ -1,12 +1,14 @@
 import Pagination from 'react-bootstrap/Pagination'
 import { useSearchParams } from 'react-router-dom'
 import { paramsParser } from '../utils'
+import { useAppSelector } from '@/redux'
 
-interface PaginationProps {
-    totalPages: number
-}
-
-const PaginationComp = ({ totalPages }: PaginationProps) => {
+const PaginationComp = () => {
+    const allArticles = useAppSelector(state => state.articles)
+    const totalPages = Math.ceil(
+        allArticles.length / parseInt(import.meta.env.VITE_ITEMS_PER_PAGE),
+    )
+    
     const [searchParams, setSearchParams] = useSearchParams()
     const { currentPage, limit, sortBy, order, search } =
         paramsParser(searchParams)
@@ -33,7 +35,7 @@ const PaginationComp = ({ totalPages }: PaginationProps) => {
                             })
                         }}
                         className='text-dark text-decoration-none'
-                        active={number === currentPage}
+                        active={number === parseInt(currentPage)}
                     >
                         {number}
                     </Pagination.Item>
