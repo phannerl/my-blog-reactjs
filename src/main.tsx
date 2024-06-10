@@ -15,13 +15,15 @@ import PageLayout from './pages/layout.tsx'
 import store from './redux/index.tsx'
 
 // eslint-disable-next-line react-refresh/only-export-components
-const ArticlesPage = React.lazy(() => import('./pages/blogs/articles/index.tsx'))
+const ArticlesPage = React.lazy(
+    () => import('./pages/blogs/articles/index.tsx'),
+)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
-            <Suspense fallback={<Loading />}>
-                <Router basename={"/my-blog-reactjs/"}>
+            <Router>
+                <Suspense fallback={<Loading />}>
                     <Routes>
                         <Route
                             path='/'
@@ -36,8 +38,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                             </Route>
                         </Route>
                     </Routes>
-                </Router>
-            </Suspense>
+                </Suspense>
+            </Router>
         </Provider>
     </React.StrictMode>,
 )
