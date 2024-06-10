@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
             <Suspense fallback={<Loading />}>
-                <Router>
+                <Router basename={"/my-blog-reactjs/"}>
                     <Routes>
                         <Route
                             path='/'
