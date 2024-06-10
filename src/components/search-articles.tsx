@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 import { useSearchParams } from 'react-router-dom'
-import { fetchArticlesAxios } from 'src/axios-action'
 import { useDebounce } from '../hooks/useDebounce'
 import { useAppDispatch } from '../redux'
 import { paramsParser } from '../utils'
+import { fetchArticlesAxios } from '@/axios-action'
 
 interface ISearchArticlesProps {
     className?: string

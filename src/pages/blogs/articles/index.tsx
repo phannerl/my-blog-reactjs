@@ -1,12 +1,13 @@
+import { fetchCurrentArticleAxios } from '@/axios-action'
+import { HeaderArticleComp } from '@/components'
+import Loading from '@/components/loading'
+import { useAppDispatch, useAppSelector } from '@/redux'
+import { timeFormatter, parserText } from '@/utils'
 import { useEffect } from 'react'
 import { Row } from 'react-bootstrap'
 import { FaRegClock } from 'react-icons/fa'
 import { useParams } from 'react-router-dom'
-import { fetchCurrentArticleAxios } from 'src/axios-action'
-import { HeaderArticleComp } from 'src/components'
-import Loading from 'src/components/loading'
-import { useAppDispatch, useAppSelector } from 'src/redux'
-import { parserText, timeFormatter } from 'src/utils'
+
 
 const Articles = () => {
     const { articleId } = useParams()

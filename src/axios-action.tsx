@@ -1,6 +1,7 @@
 import axiosInstance from './axios-instance'
-import { addArticle, editArticle } from 'src/redux/store/reducer';
 import {
+    addArticle,
+    editArticle,
     fetchArticlesByPageSuccess,
     fetchArticlesSuccess,
     fetchCurrentArticleSuccess,

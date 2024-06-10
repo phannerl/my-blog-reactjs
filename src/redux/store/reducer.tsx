@@ -1,5 +1,5 @@
+import { ArticleState, IArticle } from '@/type.d'
 import { createSlice } from '@reduxjs/toolkit'
-import { ArticleState, IArticle } from 'src/type.d'
 
 const initialState: ArticleState = {
     articles: [],

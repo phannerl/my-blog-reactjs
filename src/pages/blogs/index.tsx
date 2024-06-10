@@ -1,13 +1,10 @@
+import { fetchArticlesAxios, fetchArticlesByPageAxios } from '@/axios-action'
+import { GroupFeatures, ListBlogsComp, PaginationComp } from '@/components'
+import { useAppDispatch, useAppSelector } from '@/redux'
+import { paramsParser } from '@/utils'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { fetchArticlesAxios, fetchArticlesByPageAxios } from 'src/axios-action'
-import {
-    GroupFeatures,
-    ListBlogsComp,
-    PaginationComp
-} from 'src/components'
-import { useAppDispatch, useAppSelector } from 'src/redux'
-import { paramsParser } from 'src/utils'
+
 
 const Blogs = () => {
     const allArticles = useAppSelector(state => state.articles)

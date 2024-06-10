@@ -1,8 +1,8 @@
 import { Button, Modal } from 'react-bootstrap'
 import { FormCreatedUpdateComp } from '.'
 import { useState } from 'react'
-import { useAppSelector } from 'src/redux'
 import { FaEdit, FaPlusCircle } from 'react-icons/fa'
+import { useAppSelector } from '@/redux'
 
 
 const ModalFormsComp = ({articleId}: {articleId: string | undefined}) => {

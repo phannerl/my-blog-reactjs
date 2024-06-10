@@ -2,8 +2,9 @@ import { Button, Form } from 'react-bootstrap'
 import { useAppDispatch } from '../redux'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { addArticleAxios, editArticleAxios } from 'src/axios-action'
-import { IArticle } from 'src/type.d'
+import { IArticle } from '@/type.d'
+import { addArticleAxios, editArticleAxios } from '@/axios-action'
+
 
 interface IFormInputs {
     title: string

@@ -1,7 +1,7 @@
 import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-export const HeaderNavBar = () => {
+const HeaderNavBarComp = () => {
     return (
         <Container className='d-flex justify-content-between mb-3 py-3 bg-dark text-white'>
             <h1 className='ms-lg-5'>Daily news</h1>
@@ -16,3 +16,5 @@ export const HeaderNavBar = () => {
         </Container>
     )
 }
+
+export default HeaderNavBarComp;
